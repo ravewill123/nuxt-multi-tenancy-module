@@ -26,8 +26,8 @@ export default {
   multiTenancyModule: {
     tenants: [
       {
-        folder: "fruit"
-        domains: ["apple.com", "banana.com"],
+        folder: "fruit",
+        domains: ["apple.com", "banana.com"]
       }
     ]
     defaultTenant: "home",
@@ -39,7 +39,7 @@ export default {
 
 ### `tenants`
 
-- Type: `Array[String]`
+- Type: `Array[Object]`
 - Required
 
 To specify the list of tenants that shoud match to sub-directories in pages/
