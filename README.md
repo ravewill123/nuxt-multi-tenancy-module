@@ -24,7 +24,12 @@ yarn add nuxt-multi-tenancy-module
 export default {
   buildModules: ["nuxt-multi-tenancy-module"],
   multiTenancyModule: {
-    tenants: ["apple", "banana"],
+    tenants: [
+      {
+        folder: "fruit"
+        domains: ["apple.com", "banana.com"],
+      }
+    ]
     defaultTenant: "home",
   },
 };

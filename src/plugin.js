@@ -10,19 +10,23 @@ export function createRouter (ssrContext) {
     tenant =
       ssrContext.req.headers.host &&
       tenants.find(tenant =>
-        ssrContext.req.headers.host.startsWith(tenant)
+        tenant.domains.includes(ssrContext.req.headers.host)
       )
+
+    tenant = tenant && tenant.folder
     ssrContext.nuxt.tenant = tenant
   } else {
     tenant = window.__NUXT__.tenant
   }
   tenant = tenant || defaulTenant
   const routes = (routerOptions.routes || [])
-    .filter(({ path }) => path.startsWith('/' + tenant))
+    .filter(({ path }) => path.indexOf('/' + tenant) > -1)
     .map(route => ({
       ...route,
-      path: route.path.slice(tenant.length + 1) || '/'
+      path: route.path.slice(tenant.length + 1) || '/',
+      name: route.name == defaulTenant ? route.name : (route.name == tenant ? 'index' : route.name.slice(tenant.length + 1))
     }))
+
   return new Router({
     ...routerOptions,
     routes
