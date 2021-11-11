@@ -24,7 +24,8 @@ export function createRouter (ssrContext) {
     .map(route => ({
       ...route,
       path: route.path.slice(tenant.length + 1) || '/',
-      name: route.name == defaulTenant ? route.name : (route.name == tenant ? 'index' : route.name.slice(tenant.length + 1))
+      name: route.name == defaulTenant ? route.name : (route.name == tenant ? 'index' : (route.name ? route.name.slice(tenant.length + 1) : undefined)),
+      children: route.children ? route.children.map(route => ({ ...route, name: route.name.slice(tenant.length + 1) })) : undefined
     }))
 
   return new Router({
